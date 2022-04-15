@@ -30,6 +30,7 @@ THE SOFTWARE.
 #include <stdio.h>
 
 #define CUDA_9000 9000
+#define CUDA_9020 9020
 #define CUDA_10010 10010
 #define CUDA_10020 10020
 #define CUDA_11010 11010
@@ -1926,6 +1927,12 @@ inline static hipError_t hipStreamSynchronize(hipStream_t stream) {
 inline static hipError_t hipStreamDestroy(hipStream_t stream) {
     return hipCUDAErrorTohipError(cudaStreamDestroy(stream));
 }
+
+#if CUDA_VERSION >= CUDA_9020
+inline static hipError_t hipStreamGetCtx(hipStream_t stream, hipCtx_t* ctx) {
+    return hipCUResultTohipError(cuStreamGetCtx(stream, ctx));
+}
+#endif
 
 inline static hipError_t hipStreamGetFlags(hipStream_t stream, unsigned int *flags) {
     return hipCUDAErrorTohipError(cudaStreamGetFlags(stream, flags));

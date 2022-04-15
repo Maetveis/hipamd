@@ -397,6 +397,24 @@ hipError_t hipStreamGetFlags(hipStream_t stream, unsigned int* flags) {
 }
 
 // ================================================================================================
+hipError_t hipStreamGetCtx(hipStream_t stream, hipCtx_t* ctx) {
+  HIP_INIT_API(hipStreamGetCtx, stream, ctx);
+
+  if(ctx == nullptr) {
+    HIP_RETURN(hipErrorInvalidValue);
+  }
+
+  const int device_id = hip::Stream::DeviceId(stream);
+  if(device_id >= 0) {
+    *ctx = reinterpret_cast<hipCtx_t>(g_devices[device_id]);
+  } else {
+    HIP_RETURN(hipErrorInvalidHandle);
+  }
+
+  HIP_RETURN(hipSuccess);
+}
+
+// ================================================================================================
 hipError_t hipStreamSynchronize(hipStream_t stream) {
   HIP_INIT_API(hipStreamSynchronize, stream);
 

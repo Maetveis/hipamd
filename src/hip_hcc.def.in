@@ -171,6 +171,7 @@ hipStreamCreate
 hipStreamCreateWithFlags
 hipStreamCreateWithPriority
 hipStreamDestroy
+hipStreamGetCtx
 hipStreamGetFlags
 hipStreamQuery
 hipStreamSynchronize
